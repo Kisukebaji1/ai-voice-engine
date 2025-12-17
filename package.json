@@ -1,0 +1,9 @@
+{
+  "name": "ai-voice-engine",
+  "version": "1.0.0",
+  "description": "Free AI Voice Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
