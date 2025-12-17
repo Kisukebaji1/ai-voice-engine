@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Voice Engine</title>
 
+  <style>
+    body {
+      background: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 160px;
+      padding: 10px;
+      background: #1e1e1e;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    select, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: #333;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AI Voice Engine (Step 1)</h1>
+
+  <textarea id="textInput" placeholder="Yaha text likho..."></textarea>
+
+  <select id="voiceSelect">
+    <option>Loading voices...</option>
+  </select>
+
+  <button onclick="speak()">Generate Voice</button>
+
+  <script>
+    const synth = window.speechSynthesis;
+    const voiceSelect = document.getElementById("voiceSelect");
+
+    function loadVoices() {
+      const voices = synth.getVoices();
+      voiceSelect.innerHTML = "";
+
+      voices.forEach(v => {
+        const opt = document.createElement("option");
+        opt.value = v.name;
+        opt.textContent = v.name + " (" + v.lang + ")";
+        voiceSelect.appendChild(opt);
+      });
+    }
+
+    synth.onvoiceschanged = loadVoices;
+    loadVoices();
+
+    function speak() {
+      const text = document.getElementById("textInput").value;
+      if (!text) return;
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      const selectedVoice = synth.getVoices().find(v => v.name === voiceSelect.value);
+      if (selectedVoice) utterance.voice = selectedVoice;
+
+      synth.speak(utterance);
+    }
+  </script>
+
+</body>
+</html>
