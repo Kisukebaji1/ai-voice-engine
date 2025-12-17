@@ -75,15 +75,6 @@
     synth.onvoiceschanged = loadVoices;
     loadVoices();
 
-    function speak() {
-      const text = document.getElementById("textInput").value;
-      if (!text) return;
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      const selectedVoice = synth.getVoices().find(v => v.name === voiceSelect.value);
-      if (selectedVoice) utterance.voice = selectedVoice;
-
-      synth.speak(utterance);
     }
   </script>
 
